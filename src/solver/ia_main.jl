@@ -12,7 +12,8 @@ function isolate(lhs, var; warns=true, conditions=[], complex_roots = true, peri
     while !isequal(lhs, var)
         subs, poly = filter_poly(lhs, var)
 
-        is_poly_in_var = SymbolicUtils._iszero(polynomial_coeffs(poly, [var])[2])
+        # polynomial_coeffs returns (coeffs, remainder); remainder zero means polynomial in var
+        is_poly_in_var = iszero(polynomial_coeffs(poly, [var])[2])
         if is_poly_in_var
             roots = []
             new_var = gensym()

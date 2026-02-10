@@ -438,8 +438,12 @@ end
     @test_broken isequal(lhs, rhs)
 
     expr_poly_like = x * a^b + x
-    @test value(ia_solve(expr_poly_like, x)[1]) == 0
-    @test value(symbolic_solve(expr_poly_like, x)[1]) == 0
+    ia_roots = ia_solve(expr_poly_like, x)
+    solve_roots = symbolic_solve(expr_poly_like, x)
+    @test !isempty(ia_roots)
+    @test !isempty(solve_roots)
+    @test value(ia_roots[1]) == 0
+    @test value(solve_roots[1]) == 0
 
     @test isequal(value(symbolic_solve(2/x, x)[1]), Inf)
     @test isequal(value(symbolic_solve(x^1.5, x)[1]), 0)
