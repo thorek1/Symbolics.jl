@@ -437,9 +437,9 @@ end
     rhs = Symbolics.term(^, -c.val/a.val, 1/b.val) 
     @test_broken isequal(lhs, rhs)
 
-    expr = x * a^b + x
-    @test value(ia_solve(expr, x)[1]) == 0
-    @test value(symbolic_solve(expr, x)[1]) == 0
+    expr_poly_like = x * a^b + x
+    @test value(ia_solve(expr_poly_like, x)[1]) == 0
+    @test value(symbolic_solve(expr_poly_like, x)[1]) == 0
 
     @test isequal(value(symbolic_solve(2/x, x)[1]), Inf)
     @test isequal(value(symbolic_solve(x^1.5, x)[1]), 0)
