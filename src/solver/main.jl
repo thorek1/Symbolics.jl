@@ -186,10 +186,10 @@ function symbolic_solve(expr, x::T; dropmultiplicity = true, warns = true) where
 
     if x_univar
         if check_poly_inunivar(expr, x)
-            if !has_nemo_extension()
-                sols = ia_solve(expr, x, warns = warns)
-            else
+            if has_nemo_extension()
                 sols = solve_univar(expr, x, dropmultiplicity = dropmultiplicity)
+            else
+                sols = ia_solve(expr, x, warns = warns)
             end
         else
             sols = ia_solve(expr, x, warns = warns)
