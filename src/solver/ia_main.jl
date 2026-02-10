@@ -12,7 +12,7 @@ function isolate(lhs, var; warns=true, conditions=[], complex_roots = true, peri
     while !isequal(lhs, var)
         subs, poly = filter_poly(lhs, var)
 
-        coeffs, constant = polynomial_coeffs(poly, [var])
+        _, constant = polynomial_coeffs(poly, [var])
         if SymbolicUtils._iszero(constant)
             roots = []
             new_var = gensym()
