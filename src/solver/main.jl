@@ -1,5 +1,10 @@
 Base.:^(a::Complex{<:Real}, b::Num) = Symbolics.Pow(a, b)
 
+"""
+    is_nemo_extension_loaded()
+
+Return `true` when the SymbolicsNemoExt extension is available at runtime.
+"""
 is_nemo_extension_loaded() = Base.get_extension(Symbolics, :SymbolicsNemoExt) !== nothing
 """
     symbolic_solve(expr, x; dropmultiplicity=true, warns=true)
