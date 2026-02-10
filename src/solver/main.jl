@@ -1,4 +1,6 @@
 Base.:^(a::Complex{<:Real}, b::Num) = Symbolics.Pow(a, b)
+
+has_nemo_extension() = Base.get_extension(Symbolics, :SymbolicsNemoExt) !== nothing
 """
     symbolic_solve(expr, x; dropmultiplicity=true, warns=true)
 
@@ -179,7 +181,7 @@ function symbolic_solve(expr, x::T; dropmultiplicity = true, warns = true) where
 
     if x_univar
         if check_poly_inunivar(expr, x)
-            if Base.get_extension(Symbolics, :SymbolicsNemoExt) === nothing
+            if !has_nemo_extension()
                 sols = ia_solve(expr, x, warns = warns)
             else
                 sols = solve_univar(expr, x, dropmultiplicity = dropmultiplicity)
