@@ -178,9 +178,15 @@ function symbolic_solve(expr, x::T; dropmultiplicity = true, warns = true) where
     end
 
     if x_univar
-        sols = check_poly_inunivar(expr, x) ?
-               solve_univar(expr, x, dropmultiplicity = dropmultiplicity) :
-               ia_solve(expr, x, warns = warns)
+        if check_poly_inunivar(expr, x)
+            if Base.get_extension(Symbolics, :SymbolicsNemoExt) === nothing
+                sols = ia_solve(expr, x, warns = warns)
+            else
+                sols = solve_univar(expr, x, dropmultiplicity = dropmultiplicity)
+            end
+        else
+            sols = ia_solve(expr, x, warns = warns)
+        end
         isequal(sols, nothing) && return nothing
         sols = map(postprocess_root, sols)
         return sols

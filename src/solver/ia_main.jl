@@ -12,7 +12,7 @@ function isolate(lhs, var; warns=true, conditions=[], complex_roots = true, peri
     while !isequal(lhs, var)
         subs, poly = filter_poly(lhs, var)
 
-        if check_polynomial(poly, strict=false)
+        if check_polynomial(poly, strict=false) || check_poly_inunivar(lhs, var)
             roots = []
             new_var = gensym()
             new_var = (@variables $new_var)[1]
