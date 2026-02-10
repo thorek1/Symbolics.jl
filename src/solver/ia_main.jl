@@ -12,7 +12,10 @@ function isolate(lhs, var; warns=true, conditions=[], complex_roots = true, peri
     while !isequal(lhs, var)
         subs, poly = filter_poly(lhs, var)
 
-        if check_polynomial(poly, strict=false)
+        # polynomial_coeffs returns (coeffs, remainder); remainder zero means polynomial in var
+        # even when coefficients are symbolic (e.g., a^b), matching non-strict polynomial checks.
+        is_poly_in_var = iszero(polynomial_coeffs(poly, [var])[2])
+        if is_poly_in_var
             roots = []
             new_var = gensym()
             new_var = (@variables $new_var)[1]
